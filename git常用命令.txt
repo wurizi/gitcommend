@@ -15,6 +15,8 @@ Git基本常用命令如下：
 　　git diff  XX      查看XX文件修改了那些内容
 
 　　git log          查看历史记录
+　　git log  --oneline        查看历史记录,一行显示
+　　git log --oneline --graph
 
 　　git reset  --hard HEAD^ 或者 git reset  --hard HEAD~ 回退到上一个版本
 
@@ -63,3 +65,24 @@ Git基本常用命令如下：
 　　git remote –v 查看远程库的详细信息
 
 　　git push origin master  Git会把master分支推送到远程库对应的远程分支上
+
+      git pull --base 执行rebase来同步变化，需要显性指定--rebase参数：
+
+　　git rebase -i [startpoint] [endpoint]   合并多个commit
+然后，编辑 commit 内容。将 "pick" 改成 "squash" 或者 "s"，意思是将该 commit （add b.php）
+和 前面的 commit (add a.php) 合并。编辑完成后，保存并退出（输入   :wq!  ）
+git rebase —continue   继续完成之前的rebase操作
+
+rebase合并分支:主分支-master,新分支-dev
+1、git checkout -b dev
+2、添加、修改内容之后（add\commit），
+3、git rebase master（使提交在主分支后，连成一条线）
+4、git checkout master
+5、git merge dev
+
+将dev分支某一段commit粘贴到另一个分支（master）上
+1、git rebase   [startpoint]   [endpoint]  --onto  [branchName]  
+（[startpoint] - [endpoint]：要复制的这段分支的commit id）
+2、之后将master所指向的提交id设置为当前HEAD所指向的提交id，
+3、git checkout master
+4、git reset --hard  [head指向的commit id]
